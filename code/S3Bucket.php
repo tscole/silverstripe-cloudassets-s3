@@ -84,7 +84,6 @@ class S3Bucket extends CloudBucket
 	 * @param string $afterName - contents of the Filename property (i.e. relative to site root)
 	 */
 	public function rename(File $f, $beforeName, $afterName) {
-		$obj = $this->getFileObjectFor($beforeName);
 		$result = $this->client->copyObject(array(
 			'Bucket'     => $this->containerName,
 			'CopySource' => urlencode($this->containerName . '/' . $this->getRelativeLinkFor($beforeName)),
