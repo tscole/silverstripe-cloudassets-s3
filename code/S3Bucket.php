@@ -40,7 +40,8 @@ class S3Bucket extends CloudBucket
 		$this->client = S3Client::factory(array(
 			'key'    => $this->config[self::API_KEY],
 			'secret' => $this->config[self::API_SECRET],
-			'region' => $this->config[self::REGION]
+			'region' => $this->config[self::REGION],
+			'signature' => 'v4'
 		));
 	}
 
