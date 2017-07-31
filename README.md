@@ -4,7 +4,7 @@ Amazon S3 CloudFiles Driver
 ---------------------------
 
 CloudAssets module allows you to host all or part of the assets folder on a cloud storage container (CDN).
-You can find more details about how it works here: <https://github.com/markguinn/silverstripe-cloudassets>
+You can find more details about how it works here: <https://github.com/tscole/silverstripe-cloudassets>
 
 This driver gives you the bucket type S3Bucket for connecting to CloudFiles.
 
@@ -16,9 +16,6 @@ Requirements
 - Silverstripe 3.1+
 - Cloud Assets module
 - AWS PHP SDK
-
-Best way to install by far is `composer require edlinklater/silverstripe-cloudassets-s3`.
-
 
 Example
 -------
@@ -44,7 +41,8 @@ CloudAssets:
 
 Developer(s)
 ------------
-- Ed Linklater <ss@ed.geek.nz>
+- Tim Cole <info@inspipredwd.com>
+- Forked from Ed Linklater <ss@ed.geek.nz>
 - derived from markguinn\silverstripe-cloudassets-rackspace by Mark Guinn <mark@adaircreative.com>
 
 Contributions welcome by pull request and/or bug report.

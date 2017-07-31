@@ -1,0 +1,3 @@
+AssetAdmin:
+  extensions:
+    - S3AssetAdmin

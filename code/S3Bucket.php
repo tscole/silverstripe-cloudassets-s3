@@ -11,7 +11,6 @@ use Aws\Common\Aws;
 use Aws\Common\Enum\Size;
 use Aws\Common\Exception\MultipartUploadException;
 use Aws\S3\S3Client;
-use Aws\S3\Model\MultipartUpload\UploadBuilder;
 
 class S3Bucket extends CloudBucket
 {
@@ -38,11 +37,16 @@ class S3Bucket extends CloudBucket
 		$this->containerName = $this->config[self::CONTAINER];
 
 		$this->client = S3Client::factory(array(
+			'version' => '2006-03-01',
 			'key'    => $this->config[self::API_KEY],
 			'secret' => $this->config[self::API_SECRET],
-			'region' => $this->config[self::REGION],
-			'signature' => 'v4'
+			'signature' => 'v4',
+			'region' => $this->config[self::REGION]
 		));
+	}
+
+	public function getRelativeLinkFor($f) {
+		return preg_replace('/^' . preg_quote($cfg['FileNamePrefix'], '/') . '/', '', $f->getFilename());
 	}
 
 
@@ -53,18 +57,16 @@ class S3Bucket extends CloudBucket
 	public function put(File $f) {
 		$fp = fopen($f->getFullPath(), 'r');
 		if (!$fp) throw new Exception('Unable to open file: ' . $f->getFilename());
-
-		$uploader = UploadBuilder::newInstance()
-			->setClient($this->client)
-			->setSource($f->getFullPath())
-			->setBucket($this->containerName)
-			->setKey($this->getRelativeLinkFor($f))
-			->build();
-
+		error_log($this->getRelativeLinkFor($f));
 		try {
-			$uploader->upload();
-		} catch (MultipartUploadException $e) {
-			$uploader->abort();
+			$this->client->putObject([
+				'ACL' => 'public-read',
+				'SourceFile' => $f->getFullPath(),
+				'Bucket' => $this->containerName,
+				'Key' => $this->getRelativeLinkFor($f)
+			]);
+		} catch (Exception $error) {
+			error_log($error);
 		}
 	}
 
