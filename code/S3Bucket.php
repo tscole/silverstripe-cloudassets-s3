@@ -46,8 +46,8 @@ class S3Bucket extends CloudBucket
 	}
 
 	public function getRelativeLinkFor($f) {
-		return preg_replace('/^' . preg_quote($cfg['FileNamePrefix'], '/') . '/', '', $f->getFilename());
-	}
+		return '/', '', $f->getFilename());
+	}preg_quote
 
 
 	/**
